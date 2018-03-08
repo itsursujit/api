@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Api\ApiAuth\Http\Controllers
  * @subpackage ApiAuthController.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 use Illuminate\Routing\Controller;
@@ -19,9 +19,9 @@ use Sujit\Api\Response\Response;
  *
  * @package    Sujit\Api\ApiAuth\Http\Controllers;
  * @subpackage ApiAuthController
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
-class ApiAuthController extends Controller
+class ApiController extends Controller
 {
     protected $response;
 

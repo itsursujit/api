@@ -8,8 +8,8 @@
  * @category   PHP
  * @package    Sujit\Api\Auth\Providers
  * @subpackage ApiAuthServiceProvider.php
- * @author     Sujit Baniya <sujit@kvsocial.com>
- * @copyright  2018 Instasuite.com. All rights reserved.
+ * @author     Sujit Baniya <itsursujit@gmail.com>
+ * @copyright  2018 Sujit Baniya. All rights reserved.
  */
 
 use Illuminate\Routing\Router;
@@ -22,7 +22,7 @@ use Sujit\Api\Auth\Http\Middleware\AuthenticateApiKey;
  *
  * @package   Sujit\Api\Auth\Providers;
  * @subpackage ApiAuthServiceProvider
- * @author     Sujit Baniya <sujit@kvsocial.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 class ApiAuthServiceProvider extends ServiceProvider
 {
@@ -38,7 +38,7 @@ class ApiAuthServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         // Publish migrations
-        $this->publishFiles();
+        $this->publishMigrations();
         $this->defineMiddleware($router);
     }
     /** /
@@ -52,23 +52,20 @@ class ApiAuthServiceProvider extends ServiceProvider
             GenerateApiKey::class,
         ]);
     }
-    private function defineMiddleware($router)
+    private function defineMiddleware(Router $router)
     {
         foreach ($this->middlewares as $name => $class) {
-            if ( version_compare(app()->version(), '5.5.0') >= 0 ) {
+            if ( version_compare(app()->version(), '5.4.0') >= 0 ) {
                 $router->aliasMiddleware($name, $class);
             } else {
                 $router->middleware($name, $class);
             }
         }
     }
-    private function publishFiles()
+    private function publishMigrations()
     {
         $this->publishes([
             __DIR__ . '/../../../database/migrations/' => base_path('/database/migrations'),
         ], 'migrations');
-        $this->publishes([
-            __DIR__ . '/../../../config/apiauth.php' => config_path('apiauth.php'),
-        ], 'config');
     }
 }

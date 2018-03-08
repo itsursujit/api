@@ -8,10 +8,11 @@
  * @category   PHP
  * @package    Sujit\Api\Auth\Events
  * @subpackage ApiKeyAuthenticated.php
- * @author     Sujit Baniya <sujit@kvsocial.com>
- * @copyright  2018 Instasuite.com. All rights reserved.
+ * @author     Sujit Baniya <itsursujit@gmail.com>
+ * @copyright  2018 Sujit Baniya. All rights reserved.
  */
 
+use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 use Sujit\Api\Auth\Models\ApiKey;
 
@@ -20,7 +21,7 @@ use Sujit\Api\Auth\Models\ApiKey;
  *
  * @package   Sujit\Api\Auth\Events;
  * @subpackage ApiKeyAuthenticated
- * @author     Sujit Baniya <sujit@kvsocial.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 class ApiKeyAuthenticated
 {
@@ -30,10 +31,10 @@ class ApiKeyAuthenticated
     /**
      * Create a new event instance.
      *
-     * @param $request
+     * @param Request $request
      * @param ApiKey $apiKey
      */
-    public function __construct($request, ApiKey $apiKey)
+    public function __construct(Request $request, ApiKey $apiKey)
     {
         $this->request = $request;
         $this->apiKey = $apiKey;

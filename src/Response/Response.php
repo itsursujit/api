@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Api
  * @subpackage Response.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
@@ -21,7 +21,7 @@ use Zend\Diactoros\MessageTrait;
  *
  * @package    Sujit\Api;
  * @subpackage Response
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 class Response implements ApiResponseInterface, \JsonSerializable
 {
@@ -39,11 +39,11 @@ class Response implements ApiResponseInterface, \JsonSerializable
 
     public function __construct($data = null, $pagination = null)
     {
-        $this->data = $data;
+        $this->data       = $data;
         $this->pagination = $pagination;
-        if($data) {
+        if ($data) {
             $this->success = true;
-            $this->error = false;
+            $this->error   = false;
         }
         $this->dateTime = new \DateTime();
     }
@@ -75,7 +75,7 @@ class Response implements ApiResponseInterface, \JsonSerializable
      * @link http://tools.ietf.org/html/rfc7231#section-6
      * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
      *
-     * @param int $code            The 3-digit integer result code to set.
+     * @param int $code The 3-digit integer result code to set.
      * @param string $reasonPhrase The reason phrase to use with the
      *                             provided status code; if none is provided, implementations MAY
      *                             use the defaults as suggested in the HTTP specification.
@@ -104,14 +104,14 @@ class Response implements ApiResponseInterface, \JsonSerializable
     public function getReasonPhrase()
     {
         // TODO: Implement getReasonPhrase() method.
-}
+    }
 
     public function withSuccess($data)
     {
-        $this->data = $data;
-        $this->success = true;
+        $this->data       = $data;
+        $this->success    = true;
         $this->pagination = null;
-        $this->error = false;
+        $this->error      = false;
 
         return $this;
 
@@ -119,20 +119,20 @@ class Response implements ApiResponseInterface, \JsonSerializable
 
     public function withException($data)
     {
-        $this->data = null;
-        $this->success = false;
+        $this->data       = null;
+        $this->success    = false;
         $this->pagination = null;
-        $this->error = $data;
+        $this->error      = $data;
 
         return $this;
     }
 
     public function withPaginatedSuccess($data, $pagination)
     {
-        $this->data = $data;
-        $this->success = true;
+        $this->data       = $data;
+        $this->success    = true;
         $this->pagination = $pagination;
-        $this->error = false;
+        $this->error      = false;
 
         return $this;
     }
@@ -154,6 +154,7 @@ class Response implements ApiResponseInterface, \JsonSerializable
     public function asJson()
     {
         header('Content-Type: application/json');
+
         return json_encode($this);
     }
 }

@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Test\Unit
  * @subpackage CheckTest.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
@@ -19,7 +19,7 @@ use Sujit\Test\Unit\Base;
  *
  * @package    Sujit\Test\Unit;
  * @subpackage CheckTest
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 class CheckTest extends Base
 {

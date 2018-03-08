@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Api\Response\Interfaces
  * @subpackage ApiResponseInterface.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
@@ -20,7 +20,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @package    Sujit\Api\Response\Interfaces;
  * @subpackage ApiResponseInterface
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 interface ApiResponseInterface extends ResponseInterface
 {

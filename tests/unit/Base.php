@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Test\Unit
  * @subpackage Base.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package    Sujit\Test\Unit;
  * @subpackage Base
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 
 class Base extends TestCase

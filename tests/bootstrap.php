@@ -7,7 +7,7 @@
  * @category   PHP
  * @package    ${NAMESPACE}
  * @subpackage bootstrap.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 

@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Api\Auth\Models
  * @subpackage ApiKeyable.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
@@ -18,24 +18,24 @@
  *
  * @package    Sujit\Api\Auth\Models;
  * @subpackage ApiKeyable
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 trait ApiKeyable
 {
     /**
      *
-     * @author Sujit Baniya <s.baniya.np@gmail.com>
+     * @author Sujit Baniya <itsursujit@gmail.com>
      *
      * @return mixed
      */
     public function apiKeys()
     {
-        return $this->morphMany(config('apiauth.models.api_key', ApiKey::class), 'apikeyable');
+        return $this->morphMany(ApiKey::class, 'apikeyable');
     }
 
     /**
      *
-     * @author Sujit Baniya <s.baniya.np@gmail.com>
+     * @author Sujit Baniya <itsursujit@gmail.com>
      *
      * @return ApiKey
      */

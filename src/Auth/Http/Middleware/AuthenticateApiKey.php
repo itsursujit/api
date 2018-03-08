@@ -8,13 +8,15 @@
  * @category   PHP
  * @package    Sujit\Api\Auth\Http\Middleware
  * @subpackage AuthenticateApiKey.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
 use Carbon\Carbon;
 use Closure;
 use Sujit\Api\Auth\Events\ApiKeyAuthenticated;
+use Sujit\Api\Auth\Models\ApiKey;
+use Sujit\Api\Response\Response;
 
 
 /**
@@ -22,7 +24,7 @@ use Sujit\Api\Auth\Events\ApiKeyAuthenticated;
  *
  * @package    Sujit\Api\Auth\Http\Middleware;
  * @subpackage AuthenticateApiKey
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 class AuthenticateApiKey
 {
@@ -33,40 +35,54 @@ class AuthenticateApiKey
      * @param  \Illuminate\Http\Request $request
      * @param Closure $next
      * @param  string|null $guard
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $apiKeyValue = $request->header(config('apiguard.header_key', 'X-Authorization'));
-        $apiKey = app(config('apiguard.models.api_key', 'Sujit\Api\Auth\Models\ApiKey'))->where('key', $apiKeyValue)
-            ->first();
+        $apiKeyValue = $request->header('Authorization');
+
+        //Get API_KEY from header
+        if ( ! empty($apiKeyValue)) {
+            $bearer      = explode(' ', $apiKeyValue);
+            $apiKeyValue = $bearer[1];
+        }
+
+        $apiKey = app(ApiKey::class)->where('key', $apiKeyValue)
+                                    ->first();
         if (empty($apiKey)) {
             return $this->unauthorizedResponse();
         }
+
         // Update this api key's last_used_at and last_ip_address
         $apiKey->update([
             'last_used_at'    => Carbon::now(),
             'last_ip_address' => $request->ip(),
         ]);
+
         $apikeyable = $apiKey->apikeyable;
+
         // Bind the user or object to the request
         // By doing this, we can now get the specified user through the request object in the controller using:
         // $request->user()
         $request->setUserResolver(function () use ($apikeyable) {
             return $apikeyable;
         });
+
         // Attach the apikey object to the request
         $request->apiKey = $apiKey;
+        //Trigger event on successful API Authentication
         event(new ApiKeyAuthenticated($request, $apiKey));
+
         return $next($request);
     }
+
     protected function unauthorizedResponse()
     {
         return response([
             'error' => [
-                'code'      => '401',
-                'http_code' => 'GEN-UNAUTHORIZED',
-                'message'   => 'Unauthorized.',
+                'code'    => 401,
+                'message' => 'Unauthorized.',
             ],
         ], 401);
     }

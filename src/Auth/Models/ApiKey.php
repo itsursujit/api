@@ -8,7 +8,7 @@
  * @category   PHP
  * @package    Sujit\Api\Auth\Models
  * @subpackage ApiKey.php
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  * @copyright  2018 @ Sujit Baniya. All rights reserved.
  */
 
@@ -23,11 +23,12 @@ use Illuminate\Support\Facades\Request;
  *
  * @package    Sujit\Api\Auth\Models;
  * @subpackage ApiKey
- * @author     Sujit Baniya <s.baniya.np@gmail.com>
+ * @author     Sujit Baniya <itsursujit@gmail.com>
  */
 class ApiKey extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
         'key',
         'apikeyable_id',
@@ -35,6 +36,7 @@ class ApiKey extends Model
         'last_ip_address',
         'last_used_at',
     ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
@@ -42,6 +44,7 @@ class ApiKey extends Model
     {
         return $this->morphTo();
     }
+
     /**
      * @param $apikeyable
      *
@@ -50,39 +53,46 @@ class ApiKey extends Model
     public static function make($apikeyable)
     {
         $apiKey = new ApiKey([
-            'key'             => self::generateKey(),
-            'apikeyable_id'   => $apikeyable->id,
-            'apikeyable_type' => get_class($apikeyable),
-            'last_ip_address' => Request::ip(),
-            'last_used_at'    => Carbon::now(),
+            'key'              => self::generateKey(),
+            'apikeyable_id'    => $apikeyable->id,
+            'apikeyable_model' => get_class($apikeyable),
+            'last_ip_address'  => Request::ip(),
+            'last_used_at'     => Carbon::now(),
         ]);
         $apiKey->save();
+
         return $apiKey;
     }
+
     /**
-     * A sure method to generate a unique API key
+     * method to generate a unique API key
      *
      * @return string
      */
     public static function generateKey()
     {
         do {
-            $salt = sha1(time() . mt_rand());
-            $newKey = substr($salt, 0, 40);
+            $token = bin2hex(openssl_random_pseudo_bytes(32));
         } // Already in the DB? Fail. Try again
-        while (self::keyExists($newKey));
-        return $newKey;
+        while (self::keyExists($token));
+
+        return $token;
     }
+
     /**
      * Checks whether a key exists in the database or not
      *
      * @param $key
+     *
      * @return bool
      */
     private static function keyExists($key)
     {
         $apiKeyCount = self::where('key', '=', $key)->limit(1)->count();
-        if ($apiKeyCount > 0) return true;
+        if ($apiKeyCount > 0) {
+            return true;
+        }
+
         return false;
     }
 }
