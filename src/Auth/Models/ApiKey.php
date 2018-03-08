@@ -55,7 +55,7 @@ class ApiKey extends Model
         $apiKey = new ApiKey([
             'key'              => self::generateKey(),
             'apikeyable_id'    => $apikeyable->id,
-            'apikeyable_model' => get_class($apikeyable),
+            'apikeyable_type' => get_class($apikeyable),
             'last_ip_address'  => Request::ip(),
             'last_used_at'     => Carbon::now(),
         ]);
