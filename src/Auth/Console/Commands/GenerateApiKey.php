@@ -56,7 +56,7 @@ class GenerateApiKey extends Command
     public function handle()
     {
         $apiKeyableId    = $this->option('id');
-        $apiKeyableModel = $this->option('model');
+        $apiKeyableModel = $this->option('type');
         $apiKey          = new ApiKey([
             'key'              => ApiKey::generateKey(),
             'apikeyable_id'    => $apiKeyableId,
