@@ -1,21 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-/**
- * File 2018_03_08_create_api_keys_table.php
- *
- * PHP version 7
- *
- * @category   PHP
- * @package    ${NAMESPACE}
- * @subpackage 2018_03_08_create_api_keys_table.php
- * @author     Sujit Baniya <sujit@kvsocial.com>
- * @copyright  2018 Instasuite.com. All rights reserved.
- */
-class CreateApiKeysTable extends Migration
+class CreateApiKeys extends Migration
 {
     /**
      * Run the migrations.
