@@ -14,6 +14,7 @@
 
 use Carbon\Carbon;
 use Closure;
+use Illuminate\Http\Request;
 use Sujit\Api\Auth\Events\ApiKeyAuthenticated;
 use Sujit\Api\Auth\Models\ApiKey;
 use Sujit\Api\Response\Response;
@@ -32,13 +33,13 @@ class AuthenticateApiKey
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      * @param Closure $next
      * @param  string|null $guard
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, $guard = null)
     {
         $apiKeyValue = $request->header('Authorization');
 
@@ -46,6 +47,12 @@ class AuthenticateApiKey
         if ( ! empty($apiKeyValue)) {
             $bearer      = explode(' ', $apiKeyValue);
             $apiKeyValue = $bearer[1];
+        } else {
+            $apiKeyValue = $request->get('api_key');
+        }
+
+        if(empty($apiKeyValue)) {
+            return $this->error404Response();
         }
 
         $apiKey = app(ApiKey::class)->where('key', $apiKeyValue)
@@ -85,6 +92,16 @@ class AuthenticateApiKey
                 'message' => 'Unauthorized.',
             ],
         ], 401);
+    }
+
+    protected function error404Response()
+    {
+        return response([
+            'error' => [
+                'code'    => 404,
+                'message' => 'API Key Not Found.',
+            ],
+        ], 404);
     }
 
 }
